@@ -11,27 +11,32 @@ namespace NameSorter
     {
         static void Main(string[] args)
         {   //Skapar en dictionary med namn som nycklar och bools som värde för att markera om de finns i listan
-            Dictionary<string, bool> names = new Dictionary<string, bool>();
+            Dictionary<string, bool> names = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase)
             {
-                { "Anna", true},
-                { "John", true},
-                { "Alice", true},
-                { "Bob", true},
-                { "Carol", true}
+                { "Anna", true },
+                { "John", true },
+                { "Alice", true },
+                { "Bob", true },
+                { "Carol", true }
             };
 
             //Sorterar nycklarna i dictionaryn
             List<string> sortedNames = new List<string>(names.Keys);
             sortedNames.Sort(StringComparer.Create(CultureInfo.CurrentCulture, true));
             PrintList("Sorted list", sortedNames);
-            
 
-            names.Sort();
-            Console.WriteLine("\nSorted list:");
-            
-            Console.WriteLine("\nEnter name to search:");
-            string searchName = Console.ReadLine();
-            if (names.Contains(searchName))
+            // Sök efter namn
+            Console.WriteLine("Enter name to search:");
+            string searchName = Console.ReadLine()?.Trim();
+            if (string.IsNullOrEmpty(searchName))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid name.");
+                return;
+            }
+
+
+            //Kontrollera om namnet finns i dictionaryn
+            if (names.ContainsKey(searchName))
             {
                 Console.WriteLine($"{searchName} is in the list.");
             }
@@ -49,7 +54,7 @@ namespace NameSorter
         Console.WriteLine($"{title}:");
         foreach (var pair in dictionary)
         {
-            Console.WriteLine(name);
+            Console.WriteLine(pair.Key);
         }
     }
 
