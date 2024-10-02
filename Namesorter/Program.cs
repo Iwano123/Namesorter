@@ -9,23 +9,32 @@ namespace NameSorter
     class Program
     {
         static void Main(string[] args)
-        {
-            List<string> names = new List<string> { "Anna", "John", "Alice", "Bob", "Carol" };  //Går att effektivisera sökningen genom att byta till en dictionary där varje namn har en (Key), vi kan ha en bool som utfyllnadsvärde som bara returnerar true då namnen i listan redan är kända i detta fall.
+        {   //Skapar en dictionary med namn som nycklar och bools som värde för att markera om de finns i listan
+            Dictionary<string, bool> names = new Dictionary<string, bool>();
+            {
+                { "Anna", true},
+                { "John", true},
+                { "Alice", true},
+                { "Bob", true},
+                { "Carol", true}
+            };
+
+            List<string> names = new List<string> { "Anna", "John", "Alice", "Bob", "Carol" };  
             Console.WriteLine("Original list:");
-            foreach (var name in names)                        //Går att skala ner programmet här och skapa en metod istället för att kunna skriva ut listan, vilket gör den återanvändbar.
+            foreach (var name in names)                        
             {
                 Console.WriteLine(name);
             }
                                                                 
-            names.Sort();                                      //Anpassa sortering för kulturella kontexter genom att använda CultureInfo, eftersom den inte sorterar alfabetiskt
+            names.Sort();                                      
             Console.WriteLine("\nSorted list:");
-            foreach (var name in names)                        //Går att skala ner programmet här och skapa en metod istället för att skriva ut sorterade listan, vilket gör den återanvändbar istället för att ha två foreach loopar och skriva ut det.
+            foreach (var name in names)                        
             {
                 Console.WriteLine(name);
             }
 
             Console.WriteLine("\nEnter name to search:");
-            string searchName = Console.ReadLine();             //Implementera felhantering för att undvika fel vid sökning, skiftolägeskänslig sökning för att hantera små och stora bokstäver
+            string searchName = Console.ReadLine();             
             if (names.Contains(searchName))         
             {
                 Console.WriteLine($"{searchName} is in the list.");
